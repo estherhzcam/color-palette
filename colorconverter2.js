@@ -29,25 +29,50 @@ let arrayColorsRgb;
 let arrayColorsHex;
 
 //set if statements and functions to get the additional colors depending on the harmony selected
+
 if (harmony == "Analogous"){
-//H is shifted some degrees dor each color
+//H is shifted some degrees for each color
 arrayColorsHsl = getAnalogousColors(chosenHslNum);
 arrayColorsRgb = transformHslToRgb(arrayColorsHsl);
 arrayColorsHex = transformRgbToHex(arrayColorsRgb);
-
-//console.log(analogousColors)
 }
-else if (harmony == "Monochromatic"){console.log(`Harmony is ${harmony}`)}
-else if (harmony == "Triad"){console.log(`Harmony is ${harmony}`)}
-else if (harmony == "Complementary"){console.log(`Harmony is ${harmony}`)}
-else if (harmony == "Compound"){console.log(`Harmony is ${harmony}`)}
-else if (harmony == "Shades"){console.log(`Harmony is ${harmony}`)}
+else if (harmony == "Monochromatic"){
+  console.log(`Harmony is ${harmony}`)
+  //H is kept constant, each color has either more S, less S, more L or less L (only one change on each color).
+arrayColorsHsl = getMonochromaticColors(chosenHslNum);
+arrayColorsRgb = transformHslToRgb(arrayColorsHsl);
+arrayColorsHex = transformRgbToHex(arrayColorsRgb);
+}
+else if (harmony == "Triad"){console.log(`Harmony is ${harmony}`)
+//Two colors are shifted 60 or 120 degrees from the base.
+/* arrayColorsHsl = getTriadColors(chosenHslNum);
+arrayColorsRgb = transformHslToRgb(arrayColorsHsl);
+arrayColorsHex = transformRgbToHex(arrayColorsRgb); */
+}
+else if (harmony == "Complementary"){console.log(`Harmony is ${harmony}`)
+arrayColorsHsl = getComplementaryColors(chosenHslNum);
+arrayColorsRgb = transformHslToRgb(arrayColorsHsl);
+arrayColorsHex = transformRgbToHex(arrayColorsRgb);
+}
+else if (harmony == "Compound"){console.log(`Harmony is ${harmony}`)
+//A combination of complementary and analogous
+
+arrayColorsHsl = getCompoundColors(chosenHslNum);
+arrayColorsRgb = transformHslToRgb(arrayColorsHsl);
+arrayColorsHex = transformRgbToHex(arrayColorsRgb);
+}
+else if (harmony == "Shades"){console.log(`Harmony is ${harmony}`)
+//H is kept constant, a so is S, but L varies for each color.
+arrayColorsHsl = getShadyColors(chosenHslNum);
+arrayColorsRgb = transformHslToRgb(arrayColorsHsl);
+arrayColorsHex = transformRgbToHex(arrayColorsRgb);
+}
 
 
   displayHex(chosenHexNum, arrayColorsHex);
   displayRgb(chosenRgbNum, arrayColorsRgb);
   displayHsl(chosenHslNum, arrayColorsHsl);
-  displayColor(chosenRgbNum, arrayColorsRgb);
+  displayColor(chosenRgbNum, arrayColorsRgb); 
   start()
 }
 
@@ -123,9 +148,9 @@ analogousColorsHSL.forEach(function(object){
     let h = object.h
     let s = object.s
     let l = object.l
-h = h;
+h = h
 s = s / 100;
-l = l / 100;
+l= l / 100;
  
 let c = (1 - Math.abs(2 * l - 1)) * s,
 x = c * (1 - Math.abs(((h / 60) % 2) - 1)),
@@ -194,11 +219,81 @@ function getAnalogousColors(chosenHslNum){
   let hNum = chosenHslNum.h
  
   for( let i=0; i<4; i++){
-    hNum = hNum +7
+    hNum = hNum +12
     if (hNum>360){hNum = bringIntoInterval(hNum, 360)}
     console.log(hNum)
     arrayOfColors[i] =Object.assign({}, chosenHslNum)
     arrayOfColors[i].h = hNum;
+  }
+ return arrayOfColors
+}
+
+function getMonochromaticColors(chosenHslNum){
+  let arrayOfColors = [];
+  let lNum = chosenHslNum.l
+  for( let i=0; i<4; i++){
+    lNum = lNum +9
+    if (lNum>360){lNum = bringIntoInterval(lNum, 360)}
+    arrayOfColors[i] =Object.assign({}, chosenHslNum)
+    arrayOfColors[i].l = lNum;
+  }
+ return arrayOfColors
+}
+
+function getTriadColors(chosenHslNum) {
+  let arrayOfColors = [];
+  let hNum = chosenHslNum.h
+  let lNum = chosenHslNum.l
+  let color1H = hNum+60
+  let color1L = lNum-20
+  let color2H = hNum+60
+  let color3H = hNum-60
+  let color4H = hNum-60
+  let color4L = lNum-20
+  
+}
+
+function getComplementaryColors(chosenHslNum) {
+  //One color is at 180 degrees from the base. You decide how to handle the other three!
+  let arrayOfColors = [];
+  let hNum = chosenHslNum.h
+  for( let i=0; i<4; i++){
+    hNum = hNum +45
+    if (hNum<0){hNum = bringIntoInterval(hNum, 360)}
+    arrayOfColors[i] =Object.assign({}, chosenHslNum)
+    arrayOfColors[i].h = hNum;
+  }
+  console.log(arrayOfColors)
+ return arrayOfColors
+}
+function getCompoundColors(chosenHslNum) {
+  let arrayOfColors = [];
+  let hNum = chosenHslNum.h
+  for( let i=0; i<4; i++){
+    if (i<2){
+      hNum = hNum-7
+    }
+    else if (i>3){
+      hNum = hNum-120
+    }
+    else {
+      hNum = hNum+120
+    }
+    if (hNum<0){hNum = bringIntoInterval(hNum, 360)}
+    arrayOfColors[i] =Object.assign({}, chosenHslNum)
+    arrayOfColors[i].h = hNum;
+  }
+ return arrayOfColors
+}
+
+function getShadyColors(chosenHslNum){
+  let arrayOfColors = [];
+  let lNum = chosenHslNum.l
+  for( let i=0; i<4; i++){
+    lNum = lNum -9
+    if (lNum<0){lNum = bringInectoInterval(lNum, 360)}
+    arrayOfColors[i] =Objt.assign({}, chosenHslNum)
+    arrayOfColors[i].l = lNum;
   }
  return arrayOfColors
 }
@@ -232,16 +327,24 @@ let color3 = arrayRgb[2];
 let color4 = arrayRgb[3]
 
   document.querySelector("#mainColorNumbers .rgb p").textContent = `${rgbNum.r}, ${rgbNum.g},${rgbNum.b}`;
-  document.querySelector("#color1Numbers .rgb p").textContent = `${rgbNum.r}, ${rgbNum.g},${rgbNum.b}`;
-  document.querySelector("#color2Numbers .rgb p").textContent = `${rgbNum.r}, ${rgbNum.g},${rgbNum.b}`;
-  document.querySelector("#color3Numbers .rgb p").textContent = `${rgbNum.r}, ${rgbNum.g},${rgbNum.b}`;
-  document.querySelector("#color4Numbers .rgb p").textContent = `${rgbNum.r}, ${rgbNum.g},${rgbNum.b}`;
+  document.querySelector("#color1Numbers .rgb p").textContent = `${color1.r}, ${color1.g},${color1.b}`;
+  document.querySelector("#color2Numbers .rgb p").textContent = `${color2.r}, ${color2.g},${color2.b}`;
+  document.querySelector("#color3Numbers .rgb p").textContent = `${color3.r}, ${color3.g},${color3.b}`;
+  document.querySelector("#color4Numbers .rgb p").textContent = `${color4.r}, ${color4.g},${color4.b}`;
 
 }
 
 function displayHsl(hslNum, arrayHsl) {
+  let color1 = arrayHsl[0];
+  let color2 = arrayHsl[1];
+let color3 = arrayHsl[2];
+let color4 = arrayHsl[3]
   console.log(hslNum)
   document.querySelector("#mainColorNumbers .hsl p").textContent = `${hslNum.h}, ${hslNum.s}%, ${hslNum.l}%`;  
+  document.querySelector("#color1Numbers .hsl p").textContent = `${color1.h}, ${color1.s}%, ${color1.l}%`; 
+  document.querySelector("#color2Numbers .hsl p").textContent = `${color2.h}, ${color2.s}%, ${color2.l}%`; 
+  document.querySelector("#color3Numbers .hsl p").textContent = `${color3.h}, ${color3.s}%, ${color3.l}%`; 
+  document.querySelector("#color4Numbers .hsl p").textContent = `${color4.h}, ${color4.s}%, ${color4.l}%`; 
 }
 
 function displayColor(rgbNum, rgbArray){

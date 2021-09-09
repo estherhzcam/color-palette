@@ -1,47 +1,20 @@
-/* #converter {
-    max-width: 300px;
-    margin: 2em;
+body {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: rgb(48, 53, 63);
-    background-color: rgba(179, 179, 179, 0.719)
-;   padding: 2em;
-    border-radius: 10%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-h1 {
-    grid-column: 1;
-    grid-row:1;
-    align-self: center;
-}
-input {
-    grid-column: 2;
-    grid-row:1;
-    border: 0px;
-    padding:0;
-    margin-left: 1em;
-    align-self: center;
-    border-radius: 20%;
+    margin: 3em;
 }
 
-#colordisplay {
-    grid-column: 1/-1;
-    grid-row:2;
-    height: 300px;
-    width:300px;
-    background-color: black;
-    border:  2px solid rgb(236, 236, 236);
-    border-radius: 50%;
+#armony-selector {
+height: 2em;
+width: 40%;
+align-self: center;
 }
-#numbers {
-    grid-column: 1/-1;
-    grid-row: 3;
-} */
 
 #allcolor {
+    margin-top: 2em;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    max-width: 700px;
 }
 
 .color-wrapper>* {
@@ -50,25 +23,20 @@ input {
 }
 
 #color1 {
-background-color: blue;
+background-color: black
 }
 #color2 {
-  background-color: blue;  
+  background-color:black;  
 }
-#colordisplay {
- background-color: blue;   
+#mainColor {
+ background-color:black;   
 }
 #color3 {
-   background-color: blue; 
+   background-color: black 
 }
 #color4 {
-   background-color: blue; 
+   background-color: black; 
 }
 
 
 
-/* <div id="color1"></div>
-        <div id="color2"></div>
-        <div id="colordisplay"></div>
-        <div id="color3"></div>
-        <div id="color4"></div> */

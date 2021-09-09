@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="colorconverter.css">
 </head>
 <body>
-    <section id="converter">
-    <h1>Select a color</h1><input type="color">
+    <header><h1>Color palette</h1></header>
+    <main><section id="converter">
+    <section id="select"><h2>Select a color</h2>
+    <input type="color">
     <select id="armony-selector">
         <option value="Analogous">Analogous</option>
         <option value="Monochromatic">Monochromatic</option>
@@ -18,6 +20,7 @@
         <option value="Compound">Compound</option>
         <option value="Shades">Shades</option>
     </select>
+</section>
     <section id="allcolor">
         <div class="color-wrapper"><div id="color1"></div>
         <section class="numbers" id="color1Numbers">
@@ -57,7 +60,7 @@
         </section>
     </div>
     </section>
-    </section>
+    </section></main>
     <script src="colorconverter2.js"></script>
 </body>
 </html>
