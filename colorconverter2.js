@@ -45,9 +45,9 @@ arrayColorsHex = transformRgbToHex(arrayColorsRgb);
 }
 else if (harmony == "Triad"){console.log(`Harmony is ${harmony}`)
 //Two colors are shifted 60 or 120 degrees from the base.
-/* arrayColorsHsl = getTriadColors(chosenHslNum);
+arrayColorsHsl = getTriadColors(chosenHslNum);
 arrayColorsRgb = transformHslToRgb(arrayColorsHsl);
-arrayColorsHex = transformRgbToHex(arrayColorsRgb); */
+arrayColorsHex = transformRgbToHex(arrayColorsRgb);
 }
 else if (harmony == "Complementary"){console.log(`Harmony is ${harmony}`)
 arrayColorsHsl = getComplementaryColors(chosenHslNum);
@@ -241,15 +241,39 @@ function getMonochromaticColors(chosenHslNum){
 }
 
 function getTriadColors(chosenHslNum) {
+  console.log("inside triad function")
+  //Two colors are shifted 60 or 120 degrees from the base.
   let arrayOfColors = [];
   let hNum = chosenHslNum.h
   let lNum = chosenHslNum.l
-  let color1H = hNum+60
-  let color1L = lNum-20
-  let color2H = hNum+60
-  let color3H = hNum-60
-  let color4H = hNum-60
-  let color4L = lNum-20
+
+ //create the loop. Then push the right h or l in the right object
+for(let i=0; i<4; i++){   
+    if (i==0){
+      hNum = hNum+60
+      lNum = lNum-20
+      if (hNum<0){hNum = bringIntoInterval(hNum, 360)}
+    }
+    else if (i==1){
+      hNum = hNum+60
+      if (hNum<0){hNum = bringIntoInterval(hNum, 360)}
+    }
+    else if (i==2){
+      hNum = hNum-60
+      if (hNum<0){hNum = bringIntoInterval(hNum, 360)}
+    }
+    else if (i==3){
+      hNum = hNum-60
+      lNum = lNum-20
+      if (hNum<0){hNum = bringIntoInterval(hNum, 360)}
+    }
+    arrayOfColors[i] =Object.assign({}, chosenHslNum)
+    arrayOfColors[i].h = hNum;
+    arrayOfColors[i].l = lNum;
+    
+  } 
+
+ return arrayOfColors
   
 }
 
@@ -291,8 +315,8 @@ function getShadyColors(chosenHslNum){
   let lNum = chosenHslNum.l
   for( let i=0; i<4; i++){
     lNum = lNum -9
-    if (lNum<0){lNum = bringInectoInterval(lNum, 360)}
-    arrayOfColors[i] =Objt.assign({}, chosenHslNum)
+    if (lNum<0){lNum = bringIntoInterval(lNum, 100)}
+    arrayOfColors[i] = Object.assign({}, chosenHslNum)
     arrayOfColors[i].l = lNum;
   }
  return arrayOfColors
